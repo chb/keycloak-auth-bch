@@ -38,7 +38,28 @@ Go to your browser and type http://localhost:8080/swagger-ui.html
 
 Use the application properties according to your KeyCloak server configuration.
 
-## License
+# KeyCloak configuration
+
+- Create a realm for your project
+- Create a client in the realm
+	- Valid Redirect URIs: Poned “http://localhost:9090/*”
+- Create a valid role and a user changing the password
+
+In realm Settings/Keys
+- The public-key (right button) needed in the application.properties 
+
+```
+	#Keycloak HeartMan realm Configuration
+	url_keycloak=
+
+	# KeyCloak realm and client configuration
+	public_key=
+	client_id=
+	realm=
+```
+
+
+# License
 
 Apache 2.0.
 
