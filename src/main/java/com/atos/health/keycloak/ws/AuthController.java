@@ -65,8 +65,8 @@ public class AuthController {
 	@Value("${url_keycloak}")
 	private String url_keycloak;
 
-	@Value("${public_key_heartman}")
-	private String public_key_heartman;
+	@Value("${public_key}")
+	private String public_key;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
@@ -83,7 +83,7 @@ public class AuthController {
 
 		try {
 			result = RSATokenVerifier.verifyToken(myToken.getId(),
-					KeyCloakPublicKey.getPublicKey(public_key_heartman), url_keycloak + "realms/" + realm, true, true);
+					KeyCloakPublicKey.getPublicKey(public_key), url_keycloak + "realms/" + realm, true, true);
 
 			isvalid = result.isActive();
 			Date expiration = Time.toDate(result.getExpiration());
