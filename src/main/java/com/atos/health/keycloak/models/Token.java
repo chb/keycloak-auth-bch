@@ -20,7 +20,6 @@
  * 
  * @author	Miriam Quintero Padrón
  *			Atos Research and Innovation, Atos SPAIN SA
- *			e-mail miriam.quintero@atos.net 
  * 
  * Class to manage tokens
  */

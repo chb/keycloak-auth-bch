@@ -20,7 +20,6 @@
  * 
  * @author	Carlos Cavero
  *			Atos Research and Innovation, Atos SPAIN SA
- *			e-mail carlos.cavero@atos.net 
  * 
  * Username to retrieve when request a user given the token
  */

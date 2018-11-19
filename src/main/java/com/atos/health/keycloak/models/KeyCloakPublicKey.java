@@ -20,7 +20,6 @@
  * 
  * @author	Miriam Quintero Padrón
  *			Atos Research and Innovation, Atos SPAIN SA
- *			e-mail ana.quintero@atos.net 
  * 
  * KeyCloak public key
  */
