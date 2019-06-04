@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2018  Atos Spain SA. All rights reserved.
+ * Copyright (C) 2019  Atos Spain SA. All rights reserved.
  * 
- * This file is part of the phs-backend.
+ * This file is part of the KeyCloak auth API.
  * 
- * KeyCloakUser.java is free software: you can redistribute it and/or modify it under the 
+ * This is free software: you can redistribute it and/or modify it under the 
  * terms of the Apache License, Version 2.0 (the License);
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -18,31 +18,22 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Carlos Cavero
- *			Atos Research and Innovation, Atos SPAIN SA
+ * @author  J. Mario Rodriguez, Miriam Quintero
+ *          Atos Research and Innovation, Atos SPAIN SA
  * 
- * Username to retrieve when request a user given the token
+ * Spring boot application configuration
  */
 
-package com.atos.health.keycloak.models;
+package net.atos.ari.auth;
 
-import com.google.gson.Gson;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@Builder(toBuilder = true)
-@AllArgsConstructor
-@NoArgsConstructor
-public class KeyCloakUser {
-	private String username;
-	private String session;
+public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
-	public String toString() {
-		return new Gson().toJson(this, KeyCloakUser.class);
-	} 
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(AuthApplication.class);
+	}
+
 }

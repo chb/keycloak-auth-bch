@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2018  Atos Spain SA. All rights reserved.
+ * Copyright (C) 2018  Carlos Cavero. All rights reserved.
  * 
- * This file is part of the phs-backend.
+ * This file is part of the KeyCloak Auth API project.
  * 
- * IsValid.java is free software: you can redistribute it and/or modify it under the 
+ * This is free software: you can redistribute it and/or modify it under the 
  * terms of the Apache License, Version 2.0 (the License);
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -18,31 +18,22 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Miriam Quintero Padrón
- *			Atos Research and Innovation, Atos SPAIN SA
+ * @author  Carlos Cavero
  * 
- * Class to easily check the token validation
+ * Auth Spring boot application Service interface
  */
 
-package com.atos.health.keycloak.models;
+package net.atos.ari.auth.service;
 
-import com.google.gson.Gson;
+import org.keycloak.representations.AccessTokenResponse;
+import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import net.atos.ari.auth.exception.NotAuthorizedException;
+import net.atos.ari.auth.model.KeyCloakUser;
 
-@Data
-@Builder(toBuilder = true)
-@AllArgsConstructor
-@NoArgsConstructor
-public class IsValid {
-	private boolean valid;
-	private String tokenInfo;
-
-	@Override
-	public String toString() {
-		return new Gson().toJson(this, IsValid.class);
-	} 
+@Component
+public interface Service {
+	public AccessTokenResponse login(KeyCloakUser user) throws NotAuthorizedException;
+	public String user(String token) throws NotAuthorizedException;
 }
+

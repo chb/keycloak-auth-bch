@@ -3,7 +3,7 @@
  * 
  * This file is part of the phs-backend.
  * 
- * ApplicationTest.java is free software: you can redistribute it and/or modify it under the 
+ * KeyCloakUser.java is free software: you can redistribute it and/or modify it under the 
  * terms of the Apache License, Version 2.0 (the License);
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -18,25 +18,31 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Carlos Cavero Barca
+ * @author	Carlos Cavero
  *			Atos Research and Innovation, Atos SPAIN SA
  * 
- * Spring boot application test empty for KeyCloak auth
+ * Username to retrieve when request a user given the token
  */
 
-package com.atos.health.keycloak.ws;
+package net.atos.ari.auth.model;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import com.google.gson.Gson;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class ApplicationTest {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-	@Test
-	public void contextLoads() {
-	}
+@Data
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+public class KeyCloakUser {
+	private String username;
+	private String password;
 
+	@Override
+	public String toString() {
+		return new Gson().toJson(this, KeyCloakUser.class);
+	} 
 }
