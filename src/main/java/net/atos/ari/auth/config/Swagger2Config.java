@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2018  Atos Spain SA. All rights reserved.
  * 
- * This file is part of the phs-backend.
+ * This file is part of the KeyCloak Auth API.
  * 
- * KeyCloakUser.java is free software: you can redistribute it and/or modify it under the 
+ * AuthController.java is free software: you can redistribute it and/or modify it under the 
  * terms of the Apache License, Version 2.0 (the License);
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -18,23 +18,18 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Miriam Quintero Padrón
+ * @author	Juan Mario Rodríguez
  *			Atos Research and Innovation, Atos SPAIN SA
  * 
- * Spring boot application for KeyCloak auth
+ * Spring boot swagger documentation for KeyCloak auth
  */
 
-package com.atos.health.keycloak.ws;
+package net.atos.ari.auth.config;
 
-import java.util.ArrayList;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -43,33 +38,28 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@SpringBootApplication
+@Configuration
 @EnableSwagger2
-public class Application extends SpringBootServletInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Application.class);
+public class Swagger2Config {
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors
+						.basePackage("net.atos.ari.auth.controller"))
+				.paths(PathSelectors.regex("/.*"))
+				.build().apiInfo(apiEndPointsInfo());
 	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+	private ApiInfo apiEndPointsInfo() {
 
-	@Configuration
-	@EnableSwagger2
-	public class SwaggerConfig {
-		@Bean
-		public Docket api() {
-			return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
-					.paths(PathSelectors.any()).build().apiInfo(metaData());
-		}
+		return new ApiInfoBuilder().title("KeyCloak Auth Rest API")
+				.description("Rest API for ")
+				.contact(new Contact("Atos ARI Health", "http://booklet.atosresearch.eu/content/health-0", 
+						"ana.quintero@atos.net"))
+				.license("Apache 2.0")
+				.licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+				.version("1.0.0")
+				.build();
 	}
-
-	private ApiInfo metaData() {
-		ApiInfo apiInfo = new ApiInfo("Simple REST API OAuth2 authentication to manage KeyCloak tokens", "KeyCloak auth", "0.1",
-				"-", new Contact("Atos", "", "ana.quintero@atos.net"), "", "", new ArrayList<>());
-		return apiInfo;
-	}
-
+	
 }

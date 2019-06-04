@@ -3,7 +3,7 @@
  * 
  * This file is part of the phs-backend.
  * 
- * Token.java is free software: you can redistribute it and/or modify it under the 
+ * ApplicationTest.java is free software: you can redistribute it and/or modify it under the 
  * terms of the Apache License, Version 2.0 (the License);
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -18,32 +18,25 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Miriam Quintero Padrón
+ * @author	Carlos Cavero Barca
  *			Atos Research and Innovation, Atos SPAIN SA
  * 
- * Class to manage tokens
+ * Spring boot application test empty for KeyCloak auth
  */
 
-package com.atos.health.keycloak.models;
+package net.atos.ari.auth;
 
-import com.google.gson.Gson;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class ApplicationTest {
 
-@Data
-@Builder(toBuilder = true)
-@AllArgsConstructor
-@NoArgsConstructor
-public class Token {
-	private String id;
-	private String expiration;
-	private String info;
+	@Test
+	public void contextLoads() {
+	}
 
-	@Override
-	public String toString() {
-		return new Gson().toJson(this, Token.class);
-	} 
 }
