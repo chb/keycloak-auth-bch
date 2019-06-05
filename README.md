@@ -1,20 +1,18 @@
 # keycloak-auth
 
-#Description
+# Description
 
-Simple OAuth2 authentication to manage KeyCloak tokens. It includes four APIs: login, logout, isvalid and user
+Simple OAuth2 authentication to manage KeyCloak tokens. It includes four APIs: login and user
 
 # Technology
 
 - Maven for Java dependency management
 - Spring Boot 
-- keycloak server
+- keycloak client
 - Lombok for the models
 
 # Functionalities
 - Login, get a token given user name and password
-- Logout
-- IsValid, check that the keycloak token is valid
 - User, get the user given the token
 
 # How to deploy
@@ -26,7 +24,7 @@ Compile with
 
 And execute
 ```
-java -jar target/auth-X.X.X-SNAPSHOT.jar
+java -jar target/auth.jar
 ```
 
 It can also be run as:
@@ -34,7 +32,7 @@ It can also be run as:
     mvn spring-boot:run
 ```
 
-Go to your browser and type http://localhost:8080/swagger-ui.html
+Go to your browser and type http://localhost:8081/swagger-ui.html
 
 Use the application properties according to your KeyCloak server configuration.
 
@@ -42,22 +40,20 @@ Use the application properties according to your KeyCloak server configuration.
 
 - Create a realm for your project
 - Create a client in the realm
-	- Valid Redirect URIs: Poned “http://localhost:9090/*”
+	- Valid Redirect URIs: Put "http://localhost:9090/*"
 - Create a valid role and a user changing the password
 
-In realm Settings/Keys
-- The public-key (right button) needed in the application.properties 
+# Docker deployment
 
+The KeyCloak parameters are configured using environment variables inside the `application.yml` file:
 ```
-	#Keycloak HeartMan realm Configuration
-	url_keycloak=
-
-	# KeyCloak realm and client configuration
-	public_key=
-	client_id=
-	realm=
+docker run --name auth --restart=always -d -e KEYCLOAK_URL=http://localhost:9090/auth -e KEYCLOAK_REALM=test -e KEYCLOAK_CLIENT_ID=test -e health/auth
 ```
 
+Logging can be also configured using `LOGGING_FILE` and sharing a volume (for [ELK](https://www.elastic.co/elk-stack) processing):
+```
+docker run --name auth --restart=always -d -v /home/docker/log/test:/log/test -e KEYCLOAK_URL=http://localhost:9090/auth -e KEYCLOAK_REALM=test -e KEYCLOAK_CLIENT_ID=test -e LOGGING_FILE=/log/test/test.log health/auth
+```
 
 # License
 
