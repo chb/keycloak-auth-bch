@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import org.springframework.http.HttpHeaders;
 
@@ -65,7 +66,7 @@ public class AuthController {
 	
 	@ApiOperation(value = "Provide the user preferred name given the token")
 	@GetMapping("/user")
-	public String user(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) 
+	public String user(@ApiParam(value="Bearer <token>") @RequestHeader(HttpHeaders.AUTHORIZATION) String token) 
 			throws NotAuthorizedException {
 		log.info("Get User info");
 		return authService.user(token);

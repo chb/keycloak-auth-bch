@@ -6,14 +6,9 @@ keycloak:
     realm: ${KEYCLOAK_REALM:test}
     client_id: ${KEYCLOAK_CLIENT_ID:test}
     
-logging:
-    level:
-      root: info*
-    pattern:
-      console: "%d [%thread] %-5level %logger %M : %msg%n*"
-    file: ${LOGGING_FILE:./positive.log}
-    
 spring:
+    profiles:
+      active: ${LOGGING_MODE:dev}
     jackson:
       serialization:
         INDENT_OUTPUT: true

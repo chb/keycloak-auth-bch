@@ -50,9 +50,9 @@ The KeyCloak parameters are configured using environment variables inside the `a
 docker run --name auth --restart=always -d -e KEYCLOAK_URL=http://localhost:9090/auth -e KEYCLOAK_REALM=test -e KEYCLOAK_CLIENT_ID=test -e health/auth
 ```
 
-Logging can be also configured using `LOGGING_FILE` and sharing a volume (for [ELK](https://www.elastic.co/elk-stack) processing):
+Logging can be also configured using `LOGGING_FOLDER` and sharing a volume (for [ELK](https://www.elastic.co/elk-stack) processing). The level of the logging can be configured with `LOGGING_MODE` (dev|prod):
 ```
-docker run --name auth --restart=always -d -v /home/docker/log/test:/log/test -e KEYCLOAK_URL=http://localhost:9090/auth -e KEYCLOAK_REALM=test -e KEYCLOAK_CLIENT_ID=test -e LOGGING_FILE=/log/test/test.log health/auth
+docker run --name auth --restart=always -d -v /home/docker/log/test:/log/test -e KEYCLOAK_URL=http://localhost:9090/auth -e KEYCLOAK_REALM=test -e KEYCLOAK_CLIENT_ID=test -e LOGGING_FOLDER=/log/test -e LOGGING_MODE=dev health/auth
 ```
 
 # License

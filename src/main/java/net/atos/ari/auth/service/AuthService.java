@@ -59,6 +59,7 @@ public class AuthService implements Service {
     private String keycloak_client_id;
 	
 	RestTemplate restTemplate = new RestTemplate();
+	private String BEARER = "BEARER ";
 
 	@Override
 	public AccessTokenResponse login(KeyCloakUser user) throws NotAuthorizedException {
@@ -87,8 +88,10 @@ public class AuthService implements Service {
 	@Override
 	public String user(String authToken) throws NotAuthorizedException {
         
-        HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + authToken);
+        if (authToken.toUpperCase().startsWith(BEARER) == false) 
+            throw new NotAuthorizedException("Invalid OAuth Header. Missing Bearer prefix");        HttpHeaders headers = new HttpHeaders();
+
+            headers.set("Authorization", authToken);
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		
 		ResponseEntity<AccessToken> response = restTemplate.exchange(keycloak_url + "/realms/" + 
