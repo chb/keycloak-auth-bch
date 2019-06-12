@@ -18,9 +18,6 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Juan Mario Rodríguez
- *			Atos Research and Innovation, Atos SPAIN SA
- * 
  * Spring boot swagger documentation for KeyCloak auth
  */
 

@@ -18,9 +18,6 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Carlos Cavero
- *			Atos Research and Innovation, Atos SPAIN SA
- * 
  * Username to retrieve when request a user given the token
  */
 

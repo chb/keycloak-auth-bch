@@ -18,9 +18,6 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Miriam Quintero Padrón
- *			Atos Research and Innovation, Atos SPAIN SA
- * 
  * Spring boot controller for KeyCloak auth
  */
 
