@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2018  Carlos Cavero. All rights reserved.
+ * Copyright (C) 2018  Atos Spain SA. All rights reserved.
  * 
- * This file is part of the Todo project.
+ * This file is part of the Auth project.
  * 
  * This is free software: you can redistribute it and/or modify it under the 
  * terms of the Apache License, Version 2.0 (the License);
@@ -18,12 +18,11 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author  Carlos Cavero
- * 
- * Todo Spring boot application TodoService implementation
+ * Auth Spring boot application
  */
 package net.atos.ari.auth.service;
 
+import org.apache.http.HttpStatus;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -50,61 +49,64 @@ public class AuthService implements Service {
 
 	//Constants
 	@Value("${keycloak.url}")
-    private String keycloak_url;
+    private String keycloakUrl;
 	
 	@Value("${keycloak.realm}")
-    private String keycloak_realm;
+    private String keycloakRealm;
 	
 	@Value("${keycloak.client_id}")
-    private String keycloak_client_id;
+    private String keycloakClientId;
 	
 	RestTemplate restTemplate = new RestTemplate();
-	private String BEARER = "BEARER ";
+	private static final String BEARER = "BEARER ";
 
 	@Override
 	public AccessTokenResponse login(KeyCloakUser user) throws NotAuthorizedException {
-		AccessTokenResponse accessToken = null;
-
 		try {
 			// Gets authorization token (if it is correct)
 		    Keycloak keycloak = KeycloakBuilder
 		            .builder()
-		            .serverUrl(keycloak_url)
-		            .realm(keycloak_realm)
+		            .serverUrl(keycloakUrl)
+		            .realm(keycloakRealm)
 		            .username(user.getUsername())
 		            .password(user.getPassword())
-		            .clientId(keycloak_client_id)
+		            .clientId(keycloakClientId)
 		            .resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build())
 		            .build();
 		    
-			accessToken = keycloak.tokenManager().getAccessToken();
+			return keycloak.tokenManager().getAccessToken();
 		} catch (Exception ex) {
-    		log.error(ex.toString());
+    		log.error("Unauthorised access to protected resource", ex);
     		throw new NotAuthorizedException("Unauthorised access to protected resource");
 		}
-		return accessToken;
 	}
 
 	@Override
 	public String user(String authToken) throws NotAuthorizedException {
         
-        if (authToken.toUpperCase().startsWith(BEARER) == false) 
-            throw new NotAuthorizedException("Invalid OAuth Header. Missing Bearer prefix");        HttpHeaders headers = new HttpHeaders();
+        if (! authToken.toUpperCase().startsWith(BEARER)) {
+            throw new NotAuthorizedException("Invalid OAuth Header. Missing Bearer prefix");
+        }
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authToken);
 
-            headers.set("Authorization", authToken);
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 		
-		ResponseEntity<AccessToken> response = restTemplate.exchange(keycloak_url + "/realms/" + 
-			keycloak_realm + "/protocol/openid-connect/userinfo", 
-			HttpMethod.POST, entity, AccessToken.class);
+		ResponseEntity<AccessToken> response = restTemplate.exchange(
+				keycloakUrl + "/realms/" + keycloakRealm + "/protocol/openid-connect/userinfo", 
+				HttpMethod.POST, 
+				entity, 
+				AccessToken.class);
 
-   		if (response.getStatusCode().value() != 200) {
-            log.error("OAuth2 Authentication failure. Invalid OAuth Token supplied in Authorization Header on Request.");
+   		if (response.getStatusCode().value() != HttpStatus.SC_OK) {
+            log.error("OAuth2 Authentication failure. "
+            		+ "Invalid OAuth Token supplied in Authorization Header on Request. Code {}", response.getStatusCode().value());
     		throw new NotAuthorizedException("OAuth2 Authentication failure. "
     				+ "Invalid OAuth Token supplied in Authorization Header on Request.");
         }
    		
-		log.debug("User info: " + response.getBody().getPreferredUsername());
+		log.debug("User info: {}", response.getBody().getPreferredUsername());
    		return response.getBody().getPreferredUsername();
 	}
 	

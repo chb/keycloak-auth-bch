@@ -31,7 +31,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
 public class NotAuthorizedException extends Exception {
-  public NotAuthorizedException(String message) {
+	private static final long serialVersionUID = 1L;
+
+public NotAuthorizedException(String message) {
       super(message);
   }
 }
