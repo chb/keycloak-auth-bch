@@ -74,4 +74,6 @@ docker run --name auth -d -v /home/docker/log/test:/log/test -e KEYCLOAK_URL=htt
 
 ## License
 
-Apache 2.0.
+Apache 2.0
+
+By downloading this software, the downloader agrees with the specified terms and conditions of the License Agreement and the particularities of the license provided.
