@@ -1,5 +1,7 @@
 # keycloak-auth
 
+[![Build Status](https://travis-ci.org/AriHealth/keycloak-auth/.svg?branch=master)](https://travis-ci.org/AriHealth/keycloak-auth) [![codecov.io](https://codecov.io/gh/AriHealth/keycloak-auth/branch/master/graphs/badge.svg)](http://codecov.io/gh/AriHealth/keycloak-auth)
+
 ## Description
 
 OAuth2 authentication to manage Keycloak tokens (it needs a Keycloak url, realm and client_id to work) to allow login based on user and password. It exposes an API with these operations:
