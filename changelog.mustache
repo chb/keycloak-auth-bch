@@ -1,0 +1,31 @@
+# keycloak-auth
+
+OAuth2 authentication to manage Keycloak tokens (it needs a Keycloak url, realm and client_id to work) to allow login based on user and password. It exposes an API with these operations:
+
+- [POST] login
+- [GET] user
+
+{{#tags}}
+## {{name}}
+ {{#issues}}
+  {{#hasIssue}}
+
+#### GitHub {{issue}} {{title}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+  {{/hasIssue}}
+  {{^hasIssue}}
+#### GitHub
+  {{/hasIssue}}
+
+  {{#commits}}
+**{{{messageTitle}}}**
+
+{{#messageBodyItems}}
+ * {{.}} 
+{{/messageBodyItems}}
+
+[{{hash}}](https://github.com/arihealth/keycloak-auth/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+
+  {{/commits}}
+
+ {{/issues}}
+{{/tags}}
