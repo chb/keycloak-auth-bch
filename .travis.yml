@@ -2,7 +2,9 @@ language: java
 
 sudo: false # faster builds
 
-before_script: cd todo-backend
+cache:
+  directories:
+    - $HOME/.m2
 
 script:
   - mvn clean compile
