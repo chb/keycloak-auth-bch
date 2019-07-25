@@ -8,7 +8,7 @@ cache:
 
 script:
   - mvn clean compile
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then mvn clean test; mvn package -Dmaven.test.skip=true; mvn .travis/settings.xml sonar:sonar; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then mvn clean test; mvn package -Dmaven.test.skip=true; mvn -s .travis/settings.xml sonar:sonar; fi
   - if [ "$TRAVIS_BRANCH" = "release" ]; then chmod +x .travis/prepare.sh && ./travis/prepare.sh; mvn -s .travis/settings.xml -B release:clean release:prepare; git push --tags; mvn -s .travis/settings.xml -B release:perform; mvn generate-sources; chmod +x ./push.sh && ./push.sh; fi
 
 after_success:
