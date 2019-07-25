@@ -1,6 +1,6 @@
 # keycloak-auth
 
-[![Build Status](https://travis-ci.org/AriHealth/keycloak-auth/.svg?branch=master)](https://travis-ci.org/AriHealth/keycloak-auth) [![codecov.io](https://codecov.io/gh/AriHealth/keycloak-auth/branch/master/graphs/badge.svg)](http://codecov.io/gh/AriHealth/keycloak-auth)
+[![Build Status](https://travis-ci.org/AriHealth/keycloak-auth.svg?branch=master)](https://travis-ci.org/AriHealth/keycloak-auth) [![codecov.io](https://codecov.io/gh/AriHealth/keycloak-auth/branch/master/graphs/badge.svg)](http://codecov.io/gh/AriHealth/keycloak-auth)
 
 ## Description
 
