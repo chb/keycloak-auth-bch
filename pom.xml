@@ -123,6 +123,8 @@
 						<goals>deploy</goals>
 						<checkModificationExcludes>
 							<checkModificationExclude>CHANGELOG.md</checkModificationExclude>
+							<checkModificationExclude>.travis/prepare.sh</checkModificationExclude>
+							<checkModificationExclude>.travis/push.sh</checkModificationExclude>
 						</checkModificationExcludes>
 					</configuration>
 					<dependencies>
