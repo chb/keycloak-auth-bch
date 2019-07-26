@@ -27,8 +27,8 @@
 
 	<scm>
 		<url>https://github.com/AriHealth/keycloak-auth.git</url>
-		<connection>scm:git:git@github.com/AriHealth/keycloak-auth.git</connection>
-		<developerConnection>scm:git:git@github.com/AriHealth/keycloak-auth.git</developerConnection>
+		<connection>scm:git:https://github.com/AriHealth/keycloak-auth.git</connection>
+		<developerConnection>scm:git:https://github.com/AriHealth/keycloak-auth.git</developerConnection>
 	  <tag>HEAD</tag>
   </scm>
 
