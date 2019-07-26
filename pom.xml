@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -29,8 +31,8 @@
 		<url>https://github.com/AriHealth/keycloak-auth.git</url>
 		<connection>scm:git:https://github.com/AriHealth/keycloak-auth.git</connection>
 		<developerConnection>scm:git:https://github.com/AriHealth/keycloak-auth.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<distributionManagement>
 		<repository>
@@ -44,12 +46,12 @@
 	</distributionManagement>
 
 	<dependencies>
-        <!-- Spring Boot dependencies -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
+		<!-- Spring Boot dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
@@ -59,16 +61,16 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Swagger dependencies for REST documentation -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
-        </dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
 
 		<!-- keycloak -->
 		<dependency>
@@ -106,12 +108,13 @@
 
 	<build>
 		<finalName>auth</finalName>
-		    <plugins>
+		<pluginManagement>
+			<plugins>
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 				</plugin>
-			
+
 				<plugin>
 					<artifactId>maven-release-plugin</artifactId>
 					<configuration>
@@ -138,12 +141,12 @@
 						</dependency>
 					</dependencies>
 				</plugin>
-		
-			    <plugin>
-		            <groupId>org.codehaus.mojo</groupId>
-		            <artifactId>versions-maven-plugin</artifactId>
-		        </plugin>
-				
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+				</plugin>
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -151,8 +154,8 @@
 						<source>1.8</source>
 						<target>1.8</target>
 					</configuration>
-		        </plugin>
-				
+				</plugin>
+
 				<plugin>
 					<groupId>se.bjurr.gitchangelog</groupId>
 					<artifactId>git-changelog-maven-plugin</artifactId>
@@ -172,9 +175,9 @@
 							</configuration>
 						</execution>
 					</executions>
-		        </plugin>
-   
-			<plugin>
+				</plugin>
+
+				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>0.8.2</version>
@@ -192,8 +195,9 @@
 							</goals>
 						</execution>
 					</executions>
-				</plugin>		   
+				</plugin>
 			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
