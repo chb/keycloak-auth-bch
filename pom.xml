@@ -106,7 +106,6 @@
 
 	<build>
 		<finalName>auth</finalName>
-		<pluginManagement>
 		    <plugins>
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
@@ -178,10 +177,6 @@
 					</executions>
 		        </plugin>
    
-			</plugins>
-		</pluginManagement>
-		
-		<plugins>
 			<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
