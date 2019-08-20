@@ -34,12 +34,12 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyCloakUser {
+public class KeycloakUser {
 	private String username;
 	private String password;
 
 	@Override
 	public String toString() {
-		return new Gson().toJson(this, KeyCloakUser.class);
+		return new Gson().toJson(this, KeycloakUser.class);
 	} 
 }

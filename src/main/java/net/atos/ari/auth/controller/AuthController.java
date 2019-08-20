@@ -40,7 +40,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpHeaders;
 
 import net.atos.ari.auth.exception.NotAuthorizedException;
-import net.atos.ari.auth.model.KeyCloakUser;
+import net.atos.ari.auth.model.KeycloakUser;
 import net.atos.ari.auth.service.Service;
 
 @RestController
@@ -54,7 +54,7 @@ public class AuthController {
 
 	@ApiOperation(value = "Give OAuth access token given user and password")
 	@PostMapping("/login")
-	public AccessTokenResponse login(@RequestBody KeyCloakUser user) 
+	public AccessTokenResponse login(@RequestBody KeycloakUser user) 
 			throws NotAuthorizedException {
 		log.info("Login user");
 		return authService.login(user);

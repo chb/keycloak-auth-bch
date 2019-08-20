@@ -29,11 +29,11 @@ import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.stereotype.Component;
 
 import net.atos.ari.auth.exception.NotAuthorizedException;
-import net.atos.ari.auth.model.KeyCloakUser;
+import net.atos.ari.auth.model.KeycloakUser;
 
 @Component
 public interface Service {
-	public AccessTokenResponse login(KeyCloakUser user) throws NotAuthorizedException;
+	public AccessTokenResponse login(KeycloakUser user) throws NotAuthorizedException;
 	public String user(String token) throws NotAuthorizedException;
 }
 
