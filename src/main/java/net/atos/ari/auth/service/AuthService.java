@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import net.atos.ari.auth.exception.NotAuthorizedException;
-import net.atos.ari.auth.model.KeyCloakUser;
+import net.atos.ari.auth.model.KeycloakUser;
 
 @Component
 public class AuthService implements Service {
@@ -61,7 +61,7 @@ public class AuthService implements Service {
 	private static final String BEARER = "BEARER ";
 
 	@Override
-	public AccessTokenResponse login(KeyCloakUser user) throws NotAuthorizedException {
+	public AccessTokenResponse login(KeycloakUser user) throws NotAuthorizedException {
 		try {
 			// Gets authorization token (if it is correct)
 		    Keycloak keycloak = KeycloakBuilder
