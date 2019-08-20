@@ -46,7 +46,7 @@ Go to your browser and type http://localhost:8081/swagger-ui.html
 
 Use the application properties according to your Keycloak server configuration.
 
-## KeyCloak configuration
+## Keycloak configuration
 
 - Create a realm for your project
 - Create a client in the realm
