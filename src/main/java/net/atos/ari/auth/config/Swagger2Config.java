@@ -51,8 +51,9 @@ public class Swagger2Config {
 
 		return new ApiInfoBuilder().title("KeyCloak Auth Rest API")
 				.description("Rest API for ")
-				.contact(new Contact("Atos ARI Health", "http://booklet.atosresearch.eu/content/health-0", 
-						"ana.quintero@atos.net"))
+				.contact(new Contact("Atos ARI Health", 
+						"http://booklet.atosresearch.eu/content/health-0", 
+						""))
 				.license("Apache 2.0")
 				.licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
 				.version("1.0.0")
