@@ -17,15 +17,14 @@
 # See README file for the full disclaimer information and LICENSE file for full license 
 # information in the project root.
 
-FROM maven:3.3.9-jdk-8-alpine 
-
+FROM maven:3.3.9-jdk-8-alpine AS builder
 WORKDIR /code
+COPY pom.xml .
+RUN mvn dependency:resolve
+COPY src ./src
+RUN ["mvn", "package"]
 
-# Prepare by downloading dependencies
-ADD pom.xml /code/pom.xml
-ADD src /code/src
-
-RUN ["mvn", "clean", "install"]
-
+FROM openjdk:8-jre-alpine
+COPY --from=builder /code/target/auth.war /
 EXPOSE 8081
-CMD ["java", "-jar", "target/auth.jar"]
+CMD ["java", "-jar", "./auth.war"]
