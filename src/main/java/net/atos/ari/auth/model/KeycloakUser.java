@@ -23,8 +23,6 @@
 
 package net.atos.ari.auth.model;
 
-import com.google.gson.Gson;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,9 +35,4 @@ import lombok.NoArgsConstructor;
 public class KeycloakUser {
 	private String username;
 	private String password;
-
-	@Override
-	public String toString() {
-		return new Gson().toJson(this, KeycloakUser.class);
-	} 
 }
