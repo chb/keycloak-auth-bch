@@ -3,7 +3,7 @@
  * 
  * This file is part of the phs-backend.
  * 
- * ApplicationTest.java is free software: you can redistribute it and/or modify it under the 
+ * AuthTest.java is free software: you can redistribute it and/or modify it under the 
  * terms of the Apache License, Version 2.0 (the License);
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -28,15 +28,15 @@ package net.atos.ari.auth;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApplicationTest {
+public class AuthApplicationTest {
 
 	@Test
 	public void contextLoads() {
 	}
-
 }
