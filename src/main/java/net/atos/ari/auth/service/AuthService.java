@@ -27,7 +27,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.AccessToken;
-import org.keycloak.representations.AccessTokenResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,11 +35,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import net.atos.ari.auth.exception.NotAuthorizedException;
+import net.atos.ari.auth.model.AccessTokenResponse;
 import net.atos.ari.auth.model.KeycloakUser;
 
 @Component
@@ -63,22 +65,28 @@ public class AuthService implements Service {
 	@Override
 	public AccessTokenResponse login(KeycloakUser user) throws NotAuthorizedException {
 		try {
-			// Gets authorization token (if it is correct)
-		    Keycloak keycloak = KeycloakBuilder
-		            .builder()
-		            .serverUrl(keycloakUrl)
-		            .realm(keycloakRealm)
-		            .username(user.getUsername())
-		            .password(user.getPassword())
-		            .clientId(keycloakClientId)
-		            .resteasyClient(new ResteasyClientBuilder().connectionPoolSize(10).build())
-		            .build();
-		    
-			return keycloak.tokenManager().getAccessToken();
+			String uri = keycloakUrl + "/realms/" + keycloakRealm + 
+					"/protocol/openid-connect/token";
+			String data = "grant_type=password&username="+
+					user.getUsername()+"&password="+user.getPassword()+"&client_id="+
+					keycloakClientId;
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Content-Type", "application/x-www-form-urlencoded");
+
+			HttpEntity<String> entity = new HttpEntity<String>(data, headers);
+			ResponseEntity<AccessTokenResponse> response = restTemplate.exchange(uri, 
+					HttpMethod.POST, entity, AccessTokenResponse.class);			
+			
+	   		if (response.getStatusCode().value() != HttpStatus.SC_OK) {
+	    		log.error("Unauthorised access to protected resource", response.getStatusCode().value());
+	    		throw new NotAuthorizedException("Unauthorised access to protected resource");
+			}
+			return response.getBody();
 		} catch (Exception ex) {
     		log.error("Unauthorised access to protected resource", ex);
     		throw new NotAuthorizedException("Unauthorised access to protected resource");
-		}
+		} 
 	}
 
 	@Override
