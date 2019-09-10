@@ -23,9 +23,9 @@
 
 package net.atos.ari.auth.controller;
 
-import org.keycloak.representations.AccessTokenResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +40,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpHeaders;
 
 import net.atos.ari.auth.exception.NotAuthorizedException;
+import net.atos.ari.auth.model.AccessTokenResponse;
 import net.atos.ari.auth.model.KeycloakUser;
 import net.atos.ari.auth.service.Service;
 

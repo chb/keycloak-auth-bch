@@ -25,10 +25,10 @@
 
 package net.atos.ari.auth.service;
 
-import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.stereotype.Component;
 
 import net.atos.ari.auth.exception.NotAuthorizedException;
+import net.atos.ari.auth.model.AccessTokenResponse;
 import net.atos.ari.auth.model.KeycloakUser;
 
 @Component
