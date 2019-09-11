@@ -1,7 +1,5 @@
 language: java
 
-jdk: openjdk8
-
 sudo: false # faster builds
 
 cache:
