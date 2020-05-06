@@ -147,7 +147,7 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
+			<!--plugin>
 				<groupId>se.bjurr.gitchangelog</groupId>
 				<artifactId>git-changelog-maven-plugin</artifactId>
 				<version>1.60</version>
@@ -166,7 +166,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin -->
 
 			<plugin>
 				<groupId>org.jacoco</groupId>
