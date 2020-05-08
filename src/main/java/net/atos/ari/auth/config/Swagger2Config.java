@@ -50,11 +50,11 @@ public class Swagger2Config {
 	private ApiInfo apiEndPointsInfo() {
 
 		return new ApiInfoBuilder().title("KeyCloak Auth Rest API")
-				.description("Rest API for ")
-				.contact(new Contact("Atos ARI Health", 
-						"http://booklet.atosresearch.eu/content/health-0", 
+				.description("Rest API for Keycloak integration with FHIR OAuth servers")
+				.contact(new Contact("Atos ARI Health & Boston Children's Hospital - CHIP.org",
+						"http://booklet.atosresearch.eu/content/health-0",
 						""))
-				.license("Apache 2.0")
+				.license("License: Apache 2.0")
 				.licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
 				.version("1.0.0")
 				.build();

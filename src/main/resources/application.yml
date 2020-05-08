@@ -1,10 +1,10 @@
 server:
-  port: 8081
+  port: 8091
   
 keycloak:
-    url: ${KEYCLOAK_URL:http://localhost:8080/auth}
-    realm: ${KEYCLOAK_REALM:test}
-    client_id: ${KEYCLOAK_CLIENT_ID:test}
+    url: ${KEYCLOAK_URL:http://localhost:9090/auth}
+    realm: ${KEYCLOAK_REALM:HAPIFHIR}
+    client_id: ${KEYCLOAK_CLIENT_ID:hapifhir-client}
     
 spring:
     profiles:

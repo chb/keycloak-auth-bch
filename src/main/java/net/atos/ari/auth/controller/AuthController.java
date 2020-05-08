@@ -69,4 +69,12 @@ public class AuthController {
 		return authService.user(token);
 	}
 
+	@ApiOperation(value = "Sign a certificate for me")
+	@GetMapping("/sign")
+	public String sign(@ApiParam(value="Bearer <token>") @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
+			throws NotAuthorizedException {
+		log.info("Signing request");
+		return "signed!";
+	}
+
 }
