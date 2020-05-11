@@ -13,21 +13,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Security;
+import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
-
+@TestPropertySource(properties = { "cacertificates.cert=test-certs/ca-certificate.pem",
+        "cacertificates.key=test-certs/ca-key.pem"})
+@Profile("test")
 @RunWith(SpringRunner.class)
 public class CertificateSignerTest {
 
@@ -134,7 +135,7 @@ public class CertificateSignerTest {
     }
 
     @Test
-    public void testSign() {
+    public void testSignIDCertificate()  {
         // Load ca Certificate and Private Key
         X509Certificate caCert = null;
         PrivateKey caPrivateKey = null;
@@ -172,10 +173,7 @@ public class CertificateSignerTest {
         } catch (IOException e) {
             e.printStackTrace();
             fail(e.getMessage());
-        } catch (OperatorCreationException e) {
-            e.printStackTrace();
-            fail(e.getMessage());
-        } catch (Exception e) {
+        } catch (OperatorCreationException | InvalidKeyException | NoSuchAlgorithmException | NoSuchProviderException | SignatureException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
@@ -212,4 +210,6 @@ public class CertificateSignerTest {
         assertTrue(cs.verifySignature("TEST", detatchedSignature, kp.getPublic()));
         assertFalse(cs.verifySignature("BAD DATA", detatchedSignature, kp.getPublic()));
     }
+
+
 }

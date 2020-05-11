@@ -23,19 +23,16 @@
 
 package net.atos.ari.auth;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.security.Security;
-
+@ComponentScan({"net.atos.ari.auth","org.chip.ihl.certificates"})
 @SpringBootApplication
 public class AuthApplication {
 
-
-
 	public static void main(String[] args) {
-		Security.addProvider(new BouncyCastleProvider());
 		SpringApplication.run(AuthApplication.class, args);
 	}
 }
