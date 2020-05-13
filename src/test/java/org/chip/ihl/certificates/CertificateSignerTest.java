@@ -139,9 +139,6 @@ public class CertificateSignerTest {
         } catch (OperatorCreationException e) {
             e.printStackTrace();
             assert(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-            assert(false);
         }
     }
 
