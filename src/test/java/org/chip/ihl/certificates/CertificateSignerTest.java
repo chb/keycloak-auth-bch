@@ -128,9 +128,20 @@ public class CertificateSignerTest {
 
         try {
             CertificationRequest csr = cs.makeSigningRequest(kp, cert);
+            String stringCsr = cs.PEMEncodeCSR(csr);
+            System.out.println("String CSR: " + stringCsr);
+
+            String recodedCsr = cs.PEMEncodeCSR(cs.PEMDecodeCSR(stringCsr));
+
+            assert(stringCsr.equals(recodedCsr));
+
             assertThat(csr.getCertificationRequestInfo().getSubject().toString(), containsString("chris"));
         } catch (OperatorCreationException e) {
             e.printStackTrace();
+            assert(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+            assert(false);
         }
     }
 

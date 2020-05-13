@@ -1,4 +1,5 @@
 package org.chip.ihl.certificates;
+import org.bouncycastle.jce.provider.PEMUtil;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.*;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -193,6 +195,46 @@ public class CertificateSigner {
         X509Certificate theCert = (X509Certificate) cf.generateCertificate(is1);
         is1.close();
         return theCert;
+    }
+
+    public String PEMEncodeCert(X509Certificate cert)  {
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            String pemOut = Base64.getEncoder().encodeToString(cert.getEncoded());
+            return pemOut;
+        } catch (CertificateEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public String PEMEncodeCSR(CertificationRequest csr)  {
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            csr.encodeTo(os);
+            String pemOut = Base64.getEncoder().encodeToString(os.toByteArray());
+            return pemOut;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public CertificationRequest PEMDecodeCSR(String strCsr) {
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+            byte[] csrBytes = Base64.getDecoder().decode(strCsr);
+
+            PKCS10CertificationRequest pkcs10csr = new PKCS10CertificationRequest(csrBytes);
+
+            CertificationRequest csr = pkcs10csr.toASN1Structure();;
+            return csr;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String generateSignatureBase64(PrivateKey privKey, String materialToSign) {

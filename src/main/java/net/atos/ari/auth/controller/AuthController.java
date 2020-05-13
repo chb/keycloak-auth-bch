@@ -23,6 +23,7 @@
 
 package net.atos.ari.auth.controller;
 
+import org.chip.ihl.certificates.Models.SigningRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,9 @@ public class AuthController {
 	@Autowired
     Service authService;
 
+	@Autowired
+	org.chip.ihl.certificates.Services.SService sService;
+
 	@ApiOperation(value = "Give OAuth access token given user and password")
 	@PostMapping("/login")
 	public AccessTokenResponse login(@RequestBody KeycloakUser user) 
@@ -69,11 +73,16 @@ public class AuthController {
 		return authService.user(token);
 	}
 
-	@ApiOperation(value = "Sign a certificate for me")
-	@GetMapping("/sign")
-	public String sign(@ApiParam(value="Bearer <token>") @RequestHeader(HttpHeaders.AUTHORIZATION) String token)
+	@ApiOperation(value = "Sign an identity certificate for me")
+	@PostMapping("/sign")
+	public String sign(@ApiParam(value="Bearer <token>") @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody SigningRequest sReq)
 			throws NotAuthorizedException {
-		log.info("Signing request");
+		//
+		// Certificate signing requests should only be authorized when the OAuth2-authenticated principal mnatched the CN in the request
+		// or the client could ask for a different user's certificate to be signed.
+		//
+		String principal = authService.user(token);
+		log.info("Signing request received");
 		return "signed!";
 	}
 
