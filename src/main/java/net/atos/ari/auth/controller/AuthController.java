@@ -24,16 +24,15 @@
 package net.atos.ari.auth.controller;
 
 import org.chip.ihl.certificates.Models.SigningRequest;
+import org.chip.ihl.certificates.Services.SServiceIF;
+import org.chip.ihl.certificates.Services.SigningSService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -45,6 +44,9 @@ import net.atos.ari.auth.model.AccessTokenResponse;
 import net.atos.ari.auth.model.KeycloakUser;
 import net.atos.ari.auth.service.Service;
 
+import javax.servlet.http.HttpServletResponse;
+
+//@ComponentScan("org.chip.ihl.certificates")
 @RestController
 @EnableAutoConfiguration
 public class AuthController {
@@ -55,7 +57,7 @@ public class AuthController {
     Service authService;
 
 	@Autowired
-	org.chip.ihl.certificates.Services.SService sService;
+	SigningSService sService;
 
 	@ApiOperation(value = "Give OAuth access token given user and password")
 	@PostMapping("/login")
@@ -75,15 +77,21 @@ public class AuthController {
 
 	@ApiOperation(value = "Sign an identity certificate for me")
 	@PostMapping("/sign")
-	public String sign(@ApiParam(value="Bearer <token>") @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody SigningRequest sReq)
+	public String sign(@ApiParam(value="Bearer <token>") @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody SigningRequest sReq, HttpServletResponse response)
 			throws NotAuthorizedException {
 		//
 		// Certificate signing requests should only be authorized when the OAuth2-authenticated principal mnatched the CN in the request
 		// or the client could ask for a different user's certificate to be signed.
 		//
 		String principal = authService.user(token);
-		log.info("Signing request received");
-		return "signed!";
+		log.info("Signing request received for " + principal + "\nCSR = " + sReq.getCsrB64());
+
+		String signedB64 = sService.sign(sReq, principal);
+		if(signedB64 == null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return "Bad request or CSR CN doesn't match authenticated principal";
+		}
+		return signedB64;
 	}
 
 }

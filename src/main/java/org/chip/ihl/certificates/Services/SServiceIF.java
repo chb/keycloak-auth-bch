@@ -9,7 +9,7 @@ import net.atos.ari.auth.model.AccessTokenResponse;
 import net.atos.ari.auth.model.KeycloakUser;
 
 @Component
-public interface SService {
+public interface SServiceIF {
     public String sign(SigningRequest csr, String forPrincipal);
 }
 

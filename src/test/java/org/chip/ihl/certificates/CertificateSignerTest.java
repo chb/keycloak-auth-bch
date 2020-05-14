@@ -1,21 +1,17 @@
 package org.chip.ihl.certificates;
 
 import org.bouncycastle.asn1.pkcs.CertificationRequest;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.bouncycastle.operator.OperatorCreationException;
-import org.junit.Before;
+import org.chip.ihl.certificates.Services.CertificateSigner;
+import org.chip.ihl.certificates.utils.ResourceUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.FileNotFoundException;
@@ -28,7 +24,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 @TestPropertySource(properties = { "cacertificates.cert=test-certs/ca-certificate.pem",
         "cacertificates.key=test-certs/ca-key.pem"})
-@Profile("test")
+//@Profile("test")
 @RunWith(SpringRunner.class)
 public class CertificateSignerTest {
 
@@ -40,6 +36,11 @@ public class CertificateSignerTest {
         @Bean
         public CertificateSigner certficateSignerService() {
             return new CertificateSigner();
+        }
+
+        @Bean
+        public ResourceUtils resourceUtils() {
+            return new ResourceUtils();
         }
     }
 
@@ -95,6 +96,13 @@ public class CertificateSignerTest {
             e.printStackTrace();
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void testPemDecodeCSR(){
+        String CSR_TO_TEST = "MIIDGTCCAgECAQAwgdMxCzAJBgNVBAYTAlVTMSowKAYDVQQIDCFUaGUgQ29tbW9ud2VhbHRoIG9mIE1hc3NhY2h1c2V0dHMxDzANBgNVBAcMBkJvc3RvbjENMAsGA1UECgwEQ0hJUDEMMAoGA1UECwwDSUhMMTEwLwYDVQQDDChjaHJpc3RvcGhlci5nZW50bGVAY2hpbGRyZW5zLmhhcnZhcmQuZWR1MTcwNQYJKoZIhvcNAQkBFihjaHJpc3RvcGhlci5nZW50bGVAY2hpbGRyZW5zLmhhcnZhcmQuZWR1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvQ4/wDNi4RF4c7XpIE+FxC9gW4NHWLHgvomaFhBORjU+1M7RZCK1KqYxvcpNtFvyW6lMba5+dBDfmkdG5QAAknzZ8WVqHxI/CrPYExZld9lTWY9HtZIiMt2M8QWDAmXjR6A/cJ9bnR7gm1rCgVL7soLuvjLs3xC60Zlz+s21UQleJapGpkTqzD0d327fB7XgtMzzE+M1hUzXDgY4gMIW7ElBM+3MrSzLs/NjfRlwb0mAxvTf6jZs183Z/4nNq2BuKRde2zDUE+GT7W3Q54eC4a1+645vxuJjI8gK1ExV/l72ZH3ne/BrYSWMUciLFkxgkj0rpe3EtOINoCMMLdVSEQIDAQABoAAwDQYJKoZIhvcNAQELBQADggEBABmQpYUg7cKDbCT24bvTTIulDi+vnOczbt9+IjnX9Q2FEyW3aWOnQJk6cXzJnxX+th9TEHu8ssEDvXV3/cv2h80bAQ3ZmbJEhBwv0taOxvMBv0GMvIPriSTIfrrb3H4Y2koX9phVzS6kgxNR6S9pYk9Oz5HtFy3VILvNzc5ht+3hnddMgeCMiLzt8DoDERBhKRD7pGk/GkDSb/8mWIY5mpzLDoI0ysW7NVfeQcpG5i6KOKKG0CEP0GDm0I+CdWTGY0zU/skADjDNTq2HInmun1jcHEuXSxYqsr611rXDBQZeor/UMvBb08dJEUyZw3rbSqcAG6uxsRD3v4iBNpRNspI=";
+        CertificationRequest cr = cs.PEMDecodeCSR(CSR_TO_TEST);
+        assertNotNull(cr);
     }
 
     @Test
@@ -165,7 +173,7 @@ public class CertificateSignerTest {
 
             // Use the CA private key and public key to sign the request
 
-            X509Certificate signedCert = cs.sign(csr);
+            X509Certificate signedCert = cs.signCert(csr);
 
             System.out.println(signedCert.toString());
 

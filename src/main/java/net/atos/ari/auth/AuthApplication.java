@@ -28,7 +28,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.security.Security;
-//@ComponentScan({"net.atos.ari.auth","org.chip.ihl.certificates"})
+@ComponentScan({"org.chip.ihl.certificates","net.atos.ari.auth"})
 @SpringBootApplication
 public class AuthApplication {
 

@@ -1,12 +1,7 @@
-package org.chip.ihl.certificates;
-import org.bouncycastle.jce.provider.PEMUtil;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import org.bouncycastle.asn1.ASN1Encodable;
+package org.chip.ihl.certificates.Services;
+
 import org.bouncycastle.asn1.pkcs.CertificationRequest;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import org.bouncycastle.asn1.util.ASN1Dump;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -32,8 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -44,18 +39,14 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Date;
-import java.util.ResourceBundle;
 
-import org.springframework.core.env.Environment;
-@PropertySource("resources/application.yml")
 @Component
 public class CertificateSigner {
 
-    @Autowired Environment environment;
-
     public static final Logger logger = LoggerFactory.getLogger(CertificateSigner.class);
 
-    private ResourceUtils ru = new ResourceUtils();
+    @Autowired
+    private ResourceUtils ru ;
 
     @Value("${cacertificates.cert}")
     private String CA_CERT_FILENAME;
@@ -68,7 +59,6 @@ public class CertificateSigner {
     public X509Certificate getCaCert() {
         try {
             System.out.println("CA_CERT_FILENAME=" + CA_CERT_FILENAME);
-            System.out.println("Resource: " + this.environment.getProperty("cacertificates.cert"));
             assert(!CA_CERT_FILENAME.contains("${")); // did the templating system fail?
 
             this.caCert = pemToCert(CA_CERT_FILENAME);
@@ -87,7 +77,6 @@ public class CertificateSigner {
     private PrivateKey caPrivateKey() {
         try {
             System.out.println("CA_KEY_FILENAME=" + CA_KEY_FILENAME);
-            System.out.println("Resource: " + this.environment.getProperty("cacertificates.key"));
 
             assert(!CA_KEY_FILENAME.contains("${"));
             this.caPrivateKeyObj = getPrivateKey(CA_KEY_FILENAME);
@@ -98,7 +87,6 @@ public class CertificateSigner {
         return this.caPrivateKeyObj;
     };
 
-    @Autowired
     public CertificateSigner() {
         Security.addProvider(new BouncyCastleProvider());
         //getCaCert();
@@ -143,7 +131,6 @@ public class CertificateSigner {
         return key;
     }
 
-
     public KeyPair getKeyPair(PublicKey pubKey, PrivateKey privKey) {
         KeyPair kp = new KeyPair(pubKey, privKey);
         return kp;
@@ -159,7 +146,7 @@ public class CertificateSigner {
         return csr.toASN1Structure();
     }
 
-    public X509Certificate sign(CertificationRequest inputCSR)
+    public X509Certificate signCert(CertificationRequest inputCSR)
             throws InvalidKeyException, NoSuchAlgorithmException,
             NoSuchProviderException, SignatureException, IOException,
             OperatorCreationException, CertificateException {
@@ -222,19 +209,21 @@ public class CertificateSigner {
     }
 
     public CertificationRequest PEMDecodeCSR(String strCsr) {
+        assert(strCsr != null);
+        byte[] csrBytes = Base64.getDecoder().decode(strCsr);
+        logger.debug("Managed to Base64.getDecoder().decode(strCsr)");
+        assert(strCsr != null);
+
+        PKCS10CertificationRequest pkcs10csr;
         try {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-            byte[] csrBytes = Base64.getDecoder().decode(strCsr);
-
-            PKCS10CertificationRequest pkcs10csr = new PKCS10CertificationRequest(csrBytes);
-
-            CertificationRequest csr = pkcs10csr.toASN1Structure();;
+            pkcs10csr = new PKCS10CertificationRequest(csrBytes);
+            CertificationRequest csr = pkcs10csr.toASN1Structure();
             return csr;
         } catch (IOException e) {
+            logger.info("PKCS10CertificationRequest threw exception. Is this a valid CSR? =>\n" +  strCsr);
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     public String generateSignatureBase64(PrivateKey privKey, String materialToSign) {
@@ -280,14 +269,4 @@ public class CertificateSigner {
         return false;
     }
 
-    public String dumpCert(ASN1Encodable inAsn1) {
-        String decodedAsn1 = ASN1Dump.dumpAsString(inAsn1);
-        LoggerFactory.getLogger(CertificateSigner.class).info("ASN1 Dump:\n" + decodedAsn1);
-        return decodedAsn1;
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
 }
