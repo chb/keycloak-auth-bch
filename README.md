@@ -1,17 +1,20 @@
-# keycloak-auth
+# keycloak-auth-bch
 
 ---
 
-## Forked from...
+## Introduction and Thanks
 
-  * Many thanks to Atos Spain S.A for the original FHIR OAuth integration and the repository this code is forked from: https://github.com/AriHealth/keycloak-auth
+This is a "portal" application that provides sign-in and certificate services for an OAuth/OIDC resource server. 
+This code is specifically intended to work with the hapi-fhir-jpaserver-oauth (public link TBD) project that 
+provides a FHIR server API protected by OAuth bearer authentication. 
+
+  * Many thanks to Atos Spain S.A for the original FHIR OAuth integration and the repository 
+  this code is forked from: https://github.com/AriHealth/keycloak-auth
 
 ## Description
 
-OAuth2 authentication to manage Keycloak tokens (it needs a Keycloak url, realm and client_id to work) to allow login based on user and password. It exposes an API with these operations:
-
-- [POST] login
-- [GET] user
+OAuth2 authentication to manage client login and access to Keycloak OIDC tokens (it needs a Keycloak url, realm and 
+client_id to work) to allow login based on user and password. 
 
 ## Technology
 
@@ -21,10 +24,13 @@ OAuth2 authentication to manage Keycloak tokens (it needs a Keycloak url, realm 
 - keycloak server
 - Lombok for the models
 
-## Functionalities
+## Functionality
 
-- Login, get a token given user name and password
-- User, get the username given the token
+It exposes an API with these operations:
+
+- [POST] /login - get a token given user name and password
+- [GET] /user - get the logged in username/principal 
+- [POST] /sign - request a signed client identity certificate
 
 ## How to deploy
 
