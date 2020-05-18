@@ -130,9 +130,9 @@ public class CertificateSignerTest {
 
         KeyPair kp = cs.getKeyPair(pubKey, privateKey);
         System.out.println(kp.getPrivate().toString());
-        assertThat(kp.getPrivate().toString(), containsString("private CRT key"));
+        assertThat(kp.getPrivate().toString().toLowerCase(), containsString("private"));
         System.out.println(kp.getPublic().toString());
-        assertThat(kp.getPublic().toString(), containsString("public key"));
+        assertThat(kp.getPublic().toString().toLowerCase(), containsString("public"));
 
         try {
             CertificationRequest csr = cs.makeSigningRequest(kp, cert);
