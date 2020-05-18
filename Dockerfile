@@ -22,7 +22,7 @@ WORKDIR /code
 COPY pom.xml .
 RUN mvn dependency:resolve
 COPY src ./src
-RUN ["mvn", "package"]
+RUN ["mvn", "package", "-DskipTests=true"]
 
 FROM openjdk:8-jre-alpine
 COPY --from=builder /code/target/auth.war /

@@ -29,6 +29,7 @@ package net.atos.ari.auth;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
+import org.chip.ihl.certificates.Services.SigningSService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,7 +78,11 @@ public class AuthServiceTest {
 	 
 	@Autowired
 	private AuthService authService;
-	
+
+	@Mock
+	private SigningSService sService;
+
+
 	@Mock
 	private RestTemplate restTemplate;
 	

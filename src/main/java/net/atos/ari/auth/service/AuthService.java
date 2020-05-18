@@ -22,27 +22,20 @@
  */
 package net.atos.ari.auth.service;
 
+import net.atos.ari.auth.exception.NotAuthorizedException;
+import net.atos.ari.auth.model.AccessTokenResponse;
+import net.atos.ari.auth.model.KeycloakUser;
 import org.apache.http.HttpStatus;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.AccessToken;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import net.atos.ari.auth.exception.NotAuthorizedException;
-import net.atos.ari.auth.model.AccessTokenResponse;
-import net.atos.ari.auth.model.KeycloakUser;
 
 @Component
 public class AuthService implements Service {

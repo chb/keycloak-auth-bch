@@ -27,6 +27,7 @@ package net.atos.ari.auth;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.chip.ihl.certificates.Services.SigningSService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +65,7 @@ public class AuthControllerTest {
 	@Mock
 	private AuthService authService;
 
-    /**
+	/**
      * Init the Mockito annotations and MVC mock.
      * 
      * @return void

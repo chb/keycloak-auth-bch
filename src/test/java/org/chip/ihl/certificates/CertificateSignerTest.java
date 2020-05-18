@@ -3,14 +3,13 @@ package org.chip.ihl.certificates;
 import org.bouncycastle.asn1.pkcs.CertificationRequest;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.chip.ihl.certificates.Services.CertificateSigner;
-import org.chip.ihl.certificates.utils.ResourceUtils;
+import org.chip.ihl.certificates.utils.LocalResourceUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -39,8 +38,8 @@ public class CertificateSignerTest {
         }
 
         @Bean
-        public ResourceUtils resourceUtils() {
-            return new ResourceUtils();
+        public LocalResourceUtils resourceUtils() {
+            return new LocalResourceUtils();
         }
     }
 

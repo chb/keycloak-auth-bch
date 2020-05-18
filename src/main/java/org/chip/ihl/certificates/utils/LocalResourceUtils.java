@@ -15,7 +15,7 @@ import java.io.Reader;
 import java.util.stream.Collectors;
 
 @Component
-public class ResourceUtils {
+public class LocalResourceUtils {
 
     public String getResourceFileAsString(String fileName, Class currentClass) {
         InputStream is = getResourceFileAsInputStream(fileName, currentClass);

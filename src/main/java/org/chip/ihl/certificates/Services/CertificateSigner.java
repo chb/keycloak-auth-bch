@@ -22,13 +22,13 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.jcajce.JcaPKCS10CertificationRequestBuilder;
 import org.chip.ihl.certificates.utils.DateUtils;
-import org.chip.ihl.certificates.utils.ResourceUtils;
+import org.chip.ihl.certificates.utils.LocalResourceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -40,13 +40,13 @@ import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Date;
 
-@Component
+@Service
 public class CertificateSigner {
 
     public static final Logger logger = LoggerFactory.getLogger(CertificateSigner.class);
 
     @Autowired
-    private ResourceUtils ru ;
+    private LocalResourceUtils ru ;
 
     @Value("${cacertificates.cert}")
     private String CA_CERT_FILENAME;
