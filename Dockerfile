@@ -17,14 +17,14 @@
 # See README file for the full disclaimer information and LICENSE file for full license 
 # information in the project root.
 
-FROM maven:3.6.3-jdk-11-alpine AS builder
+FROM maven:3.3.9-jdk-8-alpine AS builder
 WORKDIR /code
 COPY pom.xml .
 RUN mvn dependency:resolve
 COPY src ./src
 RUN ["mvn", "package"]
 
-FROM openjdk:11-jre-alpine
+FROM openjdk:8-jre-alpine
 COPY --from=builder /code/target/auth.war /
 EXPOSE 8081
 CMD ["java", "-jar", "./auth.war"]
