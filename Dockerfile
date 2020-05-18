@@ -17,7 +17,7 @@
 # See README file for the full disclaimer information and LICENSE file for full license 
 # information in the project root.
 
-FROM maven:3.3.9-jdk-8-alpine AS builder
+FROM maven:3.6-jdk-11-alpine AS builder
 WORKDIR /code
 COPY pom.xml .
 RUN mvn dependency:resolve
