@@ -24,7 +24,7 @@ RUN mvn dependency:resolve
 COPY src ./src
 RUN ["mvn", "package"]
 
-FROM openjdk:8-jre-alpine
+FROM openjdk:11-jre-alpine
 COPY --from=builder /code/target/auth.war /
 EXPOSE 8081
 CMD ["java", "-jar", "./auth.war"]
