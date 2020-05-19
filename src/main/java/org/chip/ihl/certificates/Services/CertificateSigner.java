@@ -27,6 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,7 @@ import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Date;
 
-@Service
+@Component
 public class CertificateSigner {
 
     public static final Logger logger = LoggerFactory.getLogger(CertificateSigner.class);
@@ -49,10 +51,10 @@ public class CertificateSigner {
     private LocalResourceUtils ru ;
 
     @Value("${cacertificates.cert}")
-    private String CA_CERT_FILENAME;
+    public String CA_CERT_FILENAME;
 
     @Value("${cacertificates.key}")
-    private String CA_KEY_FILENAME;
+    public String CA_KEY_FILENAME;
 
     X509Certificate caCert;
 
@@ -74,6 +76,7 @@ public class CertificateSigner {
     };
 
     private PrivateKey caPrivateKeyObj;
+
     private PrivateKey caPrivateKey() {
         try {
             System.out.println("CA_KEY_FILENAME=" + CA_KEY_FILENAME);
@@ -269,4 +272,8 @@ public class CertificateSigner {
         return false;
     }
 
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertiesResolver() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 }

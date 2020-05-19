@@ -1,4 +1,4 @@
-/*
+/* /*
  * Copyright (C) 2019  Atos Spain SA. All rights reserved.
  * 
  * This file is part of the auth.
@@ -38,6 +38,7 @@ import org.keycloak.representations.AccessToken;
 
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.hamcrest.Matchers;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import org.springframework.web.client.RestTemplate;
 
 import net.atos.ari.auth.exception.NotAuthorizedException;
@@ -56,31 +58,14 @@ import net.atos.ari.auth.model.AccessTokenResponse;
 import net.atos.ari.auth.model.KeycloakUser;
 import net.atos.ari.auth.service.AuthService;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 @TestPropertySource(properties = { "keycloak.url=http://localhost:8080/auth", 
 		"keycloak.realm=test", "keycloak.client_id=test"})
 @Profile("test") 
 public class AuthServiceTest {
 
-    /**
-     * Create the Bean Auth Service.
-     * 
-     * @return the Auth Service
-     */
-	@TestConfiguration
-	static class AuthServiceImplTestContextConfiguration {
-	  
-		@Bean
-		public AuthService authService() {
-			return new AuthService();
-		}
-	}
-	 
-	@Autowired
+	@InjectMocks
 	private AuthService authService;
-
-	@Mock
-	private SigningSService sService;
 
 
 	@Mock
@@ -148,3 +133,4 @@ public class AuthServiceTest {
 	 }
 
 }
+ 

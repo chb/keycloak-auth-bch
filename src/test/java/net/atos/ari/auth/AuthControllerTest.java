@@ -53,6 +53,7 @@ import net.atos.ari.auth.exception.NotAuthorizedException;
 import net.atos.ari.auth.model.AccessTokenResponse;
 import net.atos.ari.auth.model.KeycloakUser;
 import net.atos.ari.auth.service.AuthService;
+import org.chip.ihl.certificates.Services.SigningSService;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -64,6 +65,9 @@ public class AuthControllerTest {
 	
 	@Mock
 	private AuthService authService;
+	
+    @Mock
+	private SigningSService sService;
 
 	/**
      * Init the Mockito annotations and MVC mock.

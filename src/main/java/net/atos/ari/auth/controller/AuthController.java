@@ -47,6 +47,7 @@ import net.atos.ari.auth.service.Service;
 import javax.servlet.http.HttpServletResponse;
 
 //@ComponentScan("org.chip.ihl.certificates")
+@ComponentScan({ "net.atos.ari.auth", "org.chip.ihl.certificates" })
 @RestController
 @EnableAutoConfiguration
 public class AuthController {

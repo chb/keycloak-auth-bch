@@ -4,14 +4,21 @@ import org.bouncycastle.asn1.pkcs.CertificationRequest;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.chip.ihl.certificates.Services.CertificateSigner;
 import org.chip.ihl.certificates.utils.LocalResourceUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.Spy;
+import org.mockito.InjectMocks;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,30 +28,26 @@ import java.security.cert.X509Certificate;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
+
+//@Profile("test")
+@RunWith(MockitoJUnitRunner.class)
 @TestPropertySource(properties = { "cacertificates.cert=test-certs/ca-certificate.pem",
         "cacertificates.key=test-certs/ca-key.pem"})
-//@Profile("test")
-@RunWith(SpringRunner.class)
 public class CertificateSignerTest {
 
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(CertificateSignerTest.class);
 
-    @TestConfiguration
-    static class CertificateSignerTestContextConfiguration {
+    @Spy
+    public LocalResourceUtils ru;
 
-        @Bean
-        public CertificateSigner certficateSignerService() {
-            return new CertificateSigner();
-        }
-
-        @Bean
-        public LocalResourceUtils resourceUtils() {
-            return new LocalResourceUtils();
-        }
-    }
-
-    @Autowired
+    @InjectMocks
     private CertificateSigner cs ;
+
+    @Before
+    public void inject_props() {
+        cs.CA_KEY_FILENAME = "test-certs/ca-key.pem";
+        cs.CA_CERT_FILENAME = "test-certs/ca-certificate.pem";
+    }
 
     @Test
     public void testGetPrivateKey() {
