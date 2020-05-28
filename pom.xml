@@ -11,7 +11,7 @@
 	<groupId>net.atos.ari</groupId>
 	<artifactId>auth</artifactId>
 	<version>0.0.5-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>auth</name>
 	<description>KeyCloak WS access to ATOS platforms</description>
