@@ -14,7 +14,7 @@
 	<packaging>war</packaging>
 
 	<name>auth</name>
-	<description>KeyCloak WS access to ATOS platforms</description>
+	<description>KeyCloak WS access proxy for OAuth HAPI FHIR</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
