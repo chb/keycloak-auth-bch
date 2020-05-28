@@ -16,6 +16,13 @@ provides a FHIR server API protected by OAuth bearer authentication.
 OAuth2 authentication to manage client login and access to Keycloak OIDC tokens (it needs a Keycloak url, realm and 
 client_id to work) to allow login based on user and password. 
 
+## Links
+
+- 21CFR11 addendum to the FHIR PRO Implementation Guide - https://github.com/chb/21cfr11pro-ig
+  - Published Site:  https://chb.github.io/21cfr11pro-ig/
+- The KeyCloak proxy authentication server - https://bitbucket.org/ihlchip/keycloak-auth-bch (this repository)
+- The example client - https://bitbucket.org/ihlchip/fhir-21cfr11pro-client-example 
+
 ## Technology
 
 - Java 8
