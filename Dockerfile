@@ -17,7 +17,7 @@
 # See README file for the full disclaimer information and LICENSE file for full license 
 # information in the project root.
 
-# Not sure if the --platform arg actually does anything
+# Not sure if the --platform arg actually does anything.
 FROM --platform=linux/arm64 maven:3.8.4-openjdk-8-slim AS builder
 WORKDIR /code
 COPY pom.xml .
