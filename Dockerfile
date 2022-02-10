@@ -17,14 +17,15 @@
 # See README file for the full disclaimer information and LICENSE file for full license 
 # information in the project root.
 
-FROM maven:3.3.9-jdk-8-alpine AS builder
+# Not sure if the --platform arg actually does anything
+FROM --platform=linux/arm64 maven:3.8.4-openjdk-8-slim AS builder
 WORKDIR /code
 COPY pom.xml .
-RUN mvn dependency:resolve
+RUN mvn dependency:resolve -X
 COPY src ./src
 RUN ["mvn", "package", "-DskipTests=true"]
 
-FROM openjdk:8-jre-alpine
+FROM --platform=linux/arm64 openjdk:8-jdk-slim
 COPY --from=builder /code/target/auth.war /
 EXPOSE 8081
 CMD ["java", "-jar", "./auth.war"]
