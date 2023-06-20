@@ -1,17 +1,17 @@
 server:
   port: 8081
-  
+
 keycloak:
-    url: ${KEYCLOAK_URL:http://localhost:9090/auth}
-    realm: ${KEYCLOAK_REALM:HAPIFHIR}
-    client_id: ${KEYCLOAK_CLIENT_ID:hapifhir-client}
+  url: ${KEYCLOAK_URL:http://localhost:9090}
+  realm: ${KEYCLOAK_REALM:HAPIFHIR}
+  client_id: ${KEYCLOAK_CLIENT_ID:hapifhir-client}
 
 cacertificates:
-    cert: test-certs/ca-certificate.pem
-    key: test-certs/ca-key.pem
+  cert: test-certs/ca-certificate.pem
+  key: test-certs/ca-key.pem
 spring:
-    profiles:
-      active: ${LOGGING_MODE:dev}
-    jackson:
-      serialization:
-        INDENT_OUTPUT: true
+  profiles:
+    active: ${LOGGING_MODE:dev}
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
